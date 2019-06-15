@@ -1,12 +1,20 @@
 module.exports = function(app){
-    app.post('/api/visits', function(req, res){
+
+    const visits = []
+    var pollenRecived = 0;
+
+    app.post('/api/visits', (req, res) => {
 
         // Store the supplied visit data
-        app.visits.push(req.body);
+        visit = req.body;
+        visits.push(visit);
 
-        var visitId = app.visits.length;
-        console.log('Stored visit count: ' + visitId);
+        pollenRecived += visit.pollen;
 
-        res.status(201).json({'id':visitId});
+        res.status(201).json({'id':visits.length});
+    });
+    app.get('/api/get', (req, res) => {
+        res.send("visits:" + visits.length);
     });
 }
+
